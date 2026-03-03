@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-crm": {
+    "ng-stable": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -64,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-crm:build:production"
+              "buildTarget": "ng-stable:build:production"
             },
             "development": {
-              "buildTarget": "angular-crm:build:development"
+              "buildTarget": "ng-stable:build:development"
             }
           },
           "defaultConfiguration": "development"
