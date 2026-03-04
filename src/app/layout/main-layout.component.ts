@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BetSlipSidebarComponent } from '../features/betting/components/bet-slip-sidebar/bet-slip-sidebar.component';
+import { BetSlipSidebarComponent } from '../features/betting/components/bet-slip-sidebar.component';
 
 @Component({
   selector: 'app-main-layout',

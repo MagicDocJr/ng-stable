@@ -1,7 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { BetSlipItem } from '../../models/bet-slip-model';
-import { BettingService } from '../../services/betting.service';
+import { BetSlipItem } from '../models/bet-slip-model';
+import { BettingService } from '../services/betting.service';
 
 @Component({
   selector: 'app-bet-slip-sidebar',
