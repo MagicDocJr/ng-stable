@@ -16,6 +16,10 @@ export class BettingService {
     this._items().reduce((total, item) => total + item.stake, 0),
   );
 
+  readonly potentialGain = computed(() =>
+    this._items().reduce((total, item) => total + item.stake * item.oddAtMomentOfBet, 0),
+  );
+
   constructor() {
     effect(() => {
       if (isPlatformBrowser(this.platformId)) {

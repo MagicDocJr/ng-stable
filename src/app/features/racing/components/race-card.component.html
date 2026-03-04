@@ -31,7 +31,7 @@
         <button
           type="button"
           class="btn-odds"
-          (click)="onOdssClick(horse)"
+          (click)="onOddsClick(horse)"
           [disabled]="race().status !== 'open'"
           [attr.aria-label]="'Bet on ' + horse.name + ' at odds ' + horse.odds"
         >

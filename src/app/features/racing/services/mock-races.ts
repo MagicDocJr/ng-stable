@@ -1,8 +1,7 @@
 import { Race } from '../models/race.model';
 
 // Helper to generate future times
-const minutes fromNow = (mins: number) => new Date(Date.now() + 1000 * 60 * mins).toISOString();
-
+const fromNow = (mins: number) => new Date(Date.now() + 1000 * 60 * mins).toISOString();
 export const MOCK_RACES: Race[] = [
   // RACE 1: BJERKE (Starting soon)
   {
@@ -17,7 +16,7 @@ export const MOCK_RACES: Race[] = [
       { id: 104, name: 'Lucky Strike', driver: 'E. Høitomt', odds: 8.2 },
       { id: 105, name: 'Midnight Sun', driver: 'V. Hop', odds: 12.5 },
       { id: 106, name: 'Polar Bear', driver: 'F. Hamre', odds: 3.8 },
-    ]
+    ],
   },
   // RACE 2: MOMARKEN
   {
@@ -30,7 +29,7 @@ export const MOCK_RACES: Race[] = [
       { id: 202, name: 'Dark Horse', driver: 'V. Hop', odds: 8.5 },
       { id: 203, name: 'Iron Lady', driver: 'K. Malmin', odds: 22.0 },
       { id: 204, name: 'Golden Boy', driver: 'D. Dalen', odds: 5.5 },
-    ]
+    ],
   },
   // RACE 3: FORUS
   {
@@ -47,7 +46,7 @@ export const MOCK_RACES: Race[] = [
       { id: 306, name: 'Snow Storm', driver: 'B. Steine', odds: 11.0 },
       { id: 307, name: 'Ice Breaker', driver: 'O. J. Östre', odds: 25.0 },
       { id: 308, name: 'Winter Tale', driver: 'M. T. Gundersen', odds: 33.0 },
-    ]
+    ],
   },
   // RACE 4: JARLSBERG
   {
@@ -59,6 +58,6 @@ export const MOCK_RACES: Race[] = [
       { id: 401, name: 'Speed Demon', driver: 'F. Hamre', odds: 1.5 },
       { id: 402, name: 'Slow Coach', driver: 'L. Kolle', odds: 50.0 },
       { id: 403, name: 'Average Joe', driver: 'H. T. Ydersbond', odds: 10.0 },
-    ]
-  }
+    ],
+  },
 ];
