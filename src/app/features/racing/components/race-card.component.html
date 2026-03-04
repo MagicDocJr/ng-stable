@@ -1,0 +1,43 @@
+<article class="race-card">
+  <header class="card-header">
+    <div class="track-info">
+      <h3 class="track-name">{{ race().trackName }}</h3>
+      <span class="race-id">Race {{ race().id }}</span>
+    </div>
+
+    <div class="race-meta">
+      <span class="start-time">
+        {{ race().startTime | date: 'HH:mm' }}
+      </span>
+
+      @if (race().status === 'open') {
+        <span class="status-badge open">Open</span>
+      } @else if (race().status === 'running') {
+        <span class="status-badge running">Live</span>
+      } @else {
+        <span class="status-badge closed">Closed</span>
+      }
+    </div>
+  </header>
+
+  <div class="horses-list">
+    @for (horse of race().horses; track horse.id) {
+      <div class="horse-row">
+        <div class="horse-info">
+          <div class="horse-name">{{ horse.name }}</div>
+          <div class="driver-name">{{ horse.driver }}</div>
+        </div>
+
+        <button
+          type="button"
+          class="btn-odds"
+          (click)="onOdssClick(horse)"
+          [disabled]="race().status !== 'open'"
+          [attr.aria-label]="'Bet on ' + horse.name + ' at odds ' + horse.odds"
+        >
+          <span class="odds-val">{{ horse.odds | number: '1.2-2' }}</span>
+        </button>
+      </div>
+    }
+  </div>
+</article>

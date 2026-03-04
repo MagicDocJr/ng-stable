@@ -1,0 +1,144 @@
+/* Card Container */
+:host {
+  display: block;
+}
+
+.race-card {
+  background: white;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.race-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.card-header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.track-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.race-id {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.race-meta {
+  text-align: right;
+}
+
+.start-time {
+  display: block;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+/* Status Badges */
+.status-badge {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.status-badge.open {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+.status-badge.running {
+  background-color: #ffebee;
+  color: #c62828;
+  animation: pulse 1s infinite;
+}
+.status-badge.closed {
+  background-color: #eeeeee;
+  color: #9e9e9e;
+}
+
+/* Horses List */
+.horses-list {
+  padding: 0.5rem;
+}
+
+.horse-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.horse-row:last-child {
+  border-bottom: none;
+}
+
+.horse-name {
+  font-weight: 600;
+  color: #222;
+}
+
+.driver-name {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* Odds Button */
+.btn-odds {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  min-width: 70px;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.btn-odds:hover:not(:disabled) {
+  background-color: #004494;
+}
+
+.btn-odds:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.odds-val {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
