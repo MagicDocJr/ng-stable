@@ -1,59 +1,22 @@
-# AngularCrm
+# ng-stable
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+**Angular Learning Project**
 
-## Development server
+This repository is a proof-of-concept designed to explore modern Angular features and patterns. The goal is to simulate a real-world, high-performance dashboard (specifically for the horse racing domain) to practice advanced state management and component architecture.
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
+## Key Features Under Construction
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+* **Race Schedule:** A real-time list of upcoming events using the new control flow syntax to manage DOM updates efficiently.
+* **Betting Slip (Kupong):** A complex, interactive component that manages shared state across the application using Computed Signals.
+* **Dynamic Rendering:** A simulation of a CMS-driven page layout, where components are rendered dynamically based on JSON configuration.
 
-## Code scaffolding
+## Technical Context
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Framework:** Angular 21+
+* **Styling:** Standard CSS (Scalable Component Architecture)
 
-```bash
-ng generate component component-name
-```
+**If time:**
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* **RxJS:** Implementing advanced race conditions for live odds.
+* **SignalR:** Real-time server push integration.
