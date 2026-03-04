@@ -1,0 +1,20 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Upcoming Races</h1>
+    <p>Live odds from NG-stable</p>
+  </header>
+
+  @if (racingService.isLoading()) {
+    <div class="loading-spinner">Loading program...</div>
+  }
+
+  @if (racingService.error()) {
+    <div class="error-message">Failed to load races. Please try again.</div>
+  }
+
+  <div class="race-grid">
+    @for (race of racingService.races(); track race.id) {
+      <app-race-card [race]="race" (betPlaced)="handleBetPlaced($event)" />
+    }
+  </div>
+</div>
