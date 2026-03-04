@@ -49,12 +49,12 @@
   <div class="bet-slip__footer">
     <div class="total-row">
       <span>Total Stake:</span>
-      <span class="total-amount">{{ total() | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
+      <span class="total-amount">{{ total() | currency: 'NOK' : 'symbol' : '1.0-0' }}</span>
     </div>
     <div class="total-row">
       <span>Potential Gain:</span>
       <span class="potential-gain">{{
-        potentialGain() | currency: 'USD' : 'symbol' : '1.0-0'
+        potentialGain() | currency: 'NOK' : 'symbol' : '1.0-0'
       }}</span>
     </div>
 

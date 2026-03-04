@@ -20,7 +20,7 @@ export class RaceDashboardComponent {
       horseId: event.horse.id,
       horseName: event.horse.name,
       oddAtMomentOfBet: event.horse.odds,
-      stake: 10,
+      stake: 100,
     });
   }
 }
