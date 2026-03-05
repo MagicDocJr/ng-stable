@@ -1,7 +1,8 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { BetSlipItem } from '../models/bet-slip-model';
 import { BettingService } from '../services/betting.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-bet-slip-sidebar',
@@ -11,7 +12,11 @@ import { BettingService } from '../services/betting.service';
 })
 export class BetSlipSidebarComponent {
   private bettingService = inject(BettingService);
+  private userService = inject(UserService);
+  checkoutSuccess = signal<string>('');
+  checkoutError = signal<string>('');
 
+  isProcessing = signal<boolean>(false);
   items = this.bettingService.items;
   total = this.bettingService.totalStake;
   count = this.bettingService.count;
@@ -34,5 +39,22 @@ export class BetSlipSidebarComponent {
 
       this.bettingService.addOrUpdateBet({ ...item, stake: difference });
     }
+  }
+
+  placeBets(): void {
+    this.checkoutError.set('');
+    this.checkoutSuccess.set('');
+    this.isProcessing.set(true);
+
+    setTimeout(() => {
+      const success = this.userService.placeBet(this.items(), this.total());
+      if (success) {
+        this.checkoutSuccess.set('Bet placed successfully!');
+        this.bettingService.clearSlip();
+      } else {
+        this.checkoutError.set('Failed to place bet.  Please check your balance and try again.');
+      }
+      this.isProcessing.set(false);
+    }, 1000);
   }
 }

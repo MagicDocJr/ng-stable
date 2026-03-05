@@ -58,7 +58,16 @@
       }}</span>
     </div>
 
-    <button type="button" class="btn-place-bet" [disabled]="count() === 0">Place Bet</button>
+    @if (checkoutError()) {
+      <div class="error-message">{{ checkoutError() }}</div>
+    }
+    @if (checkoutSuccess()) {
+      <div class="success-message">{{ checkoutSuccess() }}</div>
+    }
+
+    <button type="button" (click)="placeBets()" class="btn-place-bet" [disabled]="count() === 0">
+      Place Bet
+    </button>
 
     @if (count() > 0) {
       <button type="button" (click)="clearSlip()" class="btn-clear">Clear Slip</button>

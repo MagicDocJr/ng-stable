@@ -159,3 +159,51 @@
   cursor: pointer;
   font-size: 0.9rem;
 }
+
+/* --- NOTIFICATION BANNERS --- */
+.success-message,
+.error-message {
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Space between icon and text */
+  animation: slideUpFade 0.3s ease-out forwards;
+}
+
+/* Make the icons slightly larger */
+.success-message span,
+.error-message span {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.success-message {
+  background-color: #e8f5e9; /* Light green background */
+  color: var(--color-success, #2e7d32); /* Dark green text */
+  border: 1px solid #c8e6c9;
+}
+
+.error-message {
+  background-color: #ffebee; /* Light red background */
+  /* Note: Using --color-accent because --color-error wasn't in your root variables! */
+  color: var(--color-accent, #d32f2f); /* Dark red text */
+  border: 1px solid #ffcdd2;
+}
+
+/* A slick micro-interaction so the message pops nicely */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
