@@ -17,18 +17,16 @@ export class UserService {
     if (totalStake > this.balance()) {
       return false;
     }
-    for (const bet of bets) {
-      this.balance.update((currentBalance) => currentBalance - totalStake);
-      this.placedBets.update((currentBets) => [
-        ...currentBets,
-        {
-          ...bet,
-          transactionId: Math.random().toString(36).substring(2, 15),
-          placedAt: new Date(),
-          status: 'pending',
-        },
-      ]);
-    }
+
+    this.balance.update((currentBalance) => currentBalance - totalStake);
+
+    const newbets: PlacedBet[] = bets.map((bet) => ({
+      ...bet,
+      transactionId: Math.random().toString(36).substring(2, 15),
+      placedAt: new Date(),
+      status: 'pending',
+    }));
+    this.placedBets.update((currentBets) => [...currentBets, ...newbets]);
     return true;
   }
 }
