@@ -22,6 +22,8 @@ export class BetSlipSidebarComponent {
   count = this.bettingService.count;
   potentialGain = this.bettingService.potentialGain;
 
+  private messageTimeout: any;
+
   removeBet(raceId: string, horseId: number): void {
     this.bettingService.removeBet(raceId, horseId);
   }
@@ -42,6 +44,9 @@ export class BetSlipSidebarComponent {
   }
 
   placeBets(): void {
+    if (this.messageTimeout) {
+      clearTimeout(this.messageTimeout);
+    }
     this.checkoutError.set('');
     this.checkoutSuccess.set('');
     this.isProcessing.set(true);
@@ -54,6 +59,10 @@ export class BetSlipSidebarComponent {
       } else {
         this.checkoutError.set('Failed to place bet.  Please check your balance and try again.');
       }
+      this.messageTimeout = setTimeout(() => {
+        this.checkoutSuccess.set('');
+        this.checkoutError.set('');
+      }, 3000);
       this.isProcessing.set(false);
     }, 1000);
   }

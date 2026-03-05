@@ -160,7 +160,6 @@
   font-size: 0.9rem;
 }
 
-/* --- NOTIFICATION BANNERS --- */
 .success-message,
 .error-message {
   padding: 0.75rem;
@@ -172,11 +171,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem; /* Space between icon and text */
+  gap: 0.5rem;
   animation: slideUpFade 0.3s ease-out forwards;
 }
 
-/* Make the icons slightly larger */
 .success-message span,
 .error-message span {
   font-size: 1.1rem;
@@ -184,19 +182,18 @@
 }
 
 .success-message {
-  background-color: #e8f5e9; /* Light green background */
-  color: var(--color-success, #2e7d32); /* Dark green text */
+  background-color: #e8f5e9;
+  color: var(--color-success, #2e7d32);
   border: 1px solid #c8e6c9;
 }
 
 .error-message {
-  background-color: #ffebee; /* Light red background */
-  /* Note: Using --color-accent because --color-error wasn't in your root variables! */
-  color: var(--color-accent, #d32f2f); /* Dark red text */
+  background-color: #ffebee;
+
+  color: var(--color-accent, #d32f2f);
   border: 1px solid #ffcdd2;
 }
 
-/* A slick micro-interaction so the message pops nicely */
 @keyframes slideUpFade {
   from {
     opacity: 0;
