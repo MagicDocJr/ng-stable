@@ -1,0 +1,49 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>Betting History</h2>
+      <button class="btn-close" (click)="close()" aria-label="Close">&times;</button>
+    </header>
+
+    <div class="modal-body">
+      @if (userService.placedBets().length === 0) {
+        <div class="empty-state">
+          <p>No bets placed yet.</p>
+        </div>
+      } @else {
+        <div class="history-list">
+          @for (bet of userService.placedBets(); track bet.transactionId) {
+            <article class="history-item">
+              <div class="history-item__top">
+                <span class="horse-name">{{ bet.horseName }}</span>
+                <span class="status-badge pending">{{ bet.status | uppercase }}</span>
+              </div>
+
+              <div class="history-item__mid">
+                <span>Race {{ bet.raceId }}</span>
+                <span class="odds-val">Odds: {{ bet.oddAtMomentOfBet | number: '1.2-2' }}</span>
+              </div>
+
+              <div class="history-item__bottom">
+                <span
+                  >Stake:
+                  <strong>{{ bet.stake | currency: 'NOK' : 'symbol' : '1.0-0' }}</strong></span
+                >
+                <span
+                  >To Win:
+                  <strong class="potential-win">{{
+                    bet.stake * bet.oddAtMomentOfBet | currency: 'NOK' : 'symbol' : '1.0-0'
+                  }}</strong></span
+                >
+              </div>
+
+              <div class="history-item__meta">
+                TX: {{ bet.transactionId }} • {{ bet.placedAt | date: 'HH:mm:ss' }}
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
