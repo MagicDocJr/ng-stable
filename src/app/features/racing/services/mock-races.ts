@@ -3,11 +3,11 @@ import { Race } from '../models/race.model';
 // Helper to generate future times
 const fromNow = (mins: number) => new Date(Date.now() + 1000 * 60 * mins).toISOString();
 export const MOCK_RACES: Race[] = [
-  // RACE 1: BJERKE (Starting soon)
+  // RACE 1: BJERKE (DONE)
   {
     id: 'R1-BJE',
     trackName: 'Bjerke',
-    startTime: fromNow(5), // 5 mins
+    startTime: fromNow(-20), // 5 mins
     status: 'open',
     horses: [
       { id: 101, name: 'Flash Gordon', driver: 'O. M. Kjell', odds: 2.5 },
@@ -22,7 +22,7 @@ export const MOCK_RACES: Race[] = [
   {
     id: 'R2-MOM',
     trackName: 'Momarken',
-    startTime: fromNow(25),
+    startTime: fromNow(0),
     status: 'open',
     horses: [
       { id: 201, name: 'Super Star', driver: 'E. Høitomt', odds: 1.8 },

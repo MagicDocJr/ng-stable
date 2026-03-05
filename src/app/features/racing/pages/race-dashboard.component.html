@@ -5,16 +5,15 @@
   </header>
 
   @if (racingService.isLoading()) {
-    <div class="loading-spinner">Fetching Races...</div>
+    <span>Fetching Races....</span>
   }
-
   @if (racingService.error()) {
-    <div class="error-message">Failed to load races. Please try again.</div>
+    <div class="error-message">Failed to load races.</div>
   }
 
-  <div class="race-grid">
+  <div class="race-grid" [class.is-refreshing]="racingService.isLoading()">
     @for (race of racingService.races(); track race.id) {
-      <app-race-card [race]="race" (betPlaced)="handleBetPlaced($event)" />
+      <app-race-card [race]="race" />
     }
   </div>
 </div>
