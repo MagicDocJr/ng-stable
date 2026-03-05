@@ -56,6 +56,15 @@ export class BettingService {
     this._items.set([]);
   }
 
+  readonly activeBets = computed(() => {
+    const activeIds = new Set(this._items().map((item) => `${item.raceId}-${item.horseId}`));
+    return activeIds;
+  });
+
+  hasBet(raceId: string, horseId: number): boolean {
+    return this.activeBets().has(`${raceId}-${horseId}`);
+  }
+
   private loadFromStorage(): BetSlipItem[] {
     if (isPlatformBrowser(this.platformId)) {
       const saved = localStorage.getItem('bet-slip-cart');
