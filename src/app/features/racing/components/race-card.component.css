@@ -169,7 +169,6 @@
   animation: flash-red 1.5s ease-out;
 }
 
-/* 2. Fade back to the default button colors */
 @keyframes flash-green {
   0% {
     background-color: #4caf50;
@@ -177,7 +176,7 @@
     transform: scale(1.05);
   }
   100% {
-    background-color: #0056b3; /* Default blue */
+    background-color: #0056b3;
     color: white;
     transform: scale(1);
   }
@@ -190,7 +189,7 @@
     transform: scale(0.95);
   }
   100% {
-    background-color: #0056b3; /* Default blue */
+    background-color: #0056b3;
     color: white;
     transform: scale(1);
   }

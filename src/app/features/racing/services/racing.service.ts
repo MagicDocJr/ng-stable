@@ -42,19 +42,9 @@ export class RacingService {
 
   private processRaceTick(): void {
     const currentTime = Date.now();
-
     this._races.update((currentRaces) =>
       currentRaces.map((race) => {
-        const startTime = new Date(race.startTime).getTime();
-        const diffMinutes = (startTime - currentTime) / (1000 * 60);
-
-        let currentStatus: 'open' | 'closed' | 'running' = 'open';
-        if (diffMinutes > -5 && diffMinutes <= 0) {
-          currentStatus = 'running';
-        } else if (diffMinutes <= -5) {
-          currentStatus = 'closed';
-        }
-
+        const currentStatus = this.updateStatus(race, currentTime);
         if (currentStatus !== 'open') {
           return { ...race, status: currentStatus };
         }
@@ -73,6 +63,19 @@ export class RacingService {
         return { ...race, status: currentStatus, horses: updatedHorses };
       }),
     );
+  }
+
+  private updateStatus(race: Race, currentTime: number): 'open' | 'closed' | 'running' {
+    const startTime = new Date(race.startTime).getTime();
+    const diffMinutes = (startTime - currentTime) / (1000 * 60);
+
+    let currentStatus: 'open' | 'closed' | 'running' = 'open';
+    if (diffMinutes > -5 && diffMinutes <= 0) {
+      currentStatus = 'running';
+    } else if (diffMinutes <= -5) {
+      currentStatus = 'closed';
+    }
+    return currentStatus;
   }
 
   // need to clear trends for animations in css to be ran on next tick.

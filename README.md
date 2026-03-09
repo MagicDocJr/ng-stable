@@ -1,25 +1,41 @@
 # ng-stable
 
-**Angular Learning Project**
+**Enterprise-grade Sportsbook Dashboard Simulation**
 
-This repository is a proof-of-concept designed to explore modern Angular features and patterns. The goal is to simulate a real-world, high-performance dashboard (specifically for the horse racing domain) to practice advanced state management and component architecture.
+A proof-of-concept exploring **Angular 21+** features and high-performance state management for a real-time horse racing dashboard.
 
-## Key Features Under Construction
+## 🚀 Key Features
 
-- **Race Schedule:** A real-time list of upcoming events using the new control flow syntax to manage DOM updates efficiently.
-- **Betting Slip (Kupong):** A complex, interactive component that manages shared state across the application using Computed Signals.
-- **Dynamic Rendering:** A simulation of a CMS-driven page layout, where components are rendered dynamically based on JSON configuration.
+- **Live Odds "Game Loop":** Centralized heartbeat using **RxJS `interval`** to process race statuses and odds fluctuations.
+- **Unidirectional Data Flow:** Services process domain logic to update a single source of truth (`_races` signal), ensuring consistent UI state.
+- **Reactive Betting Slip:** Supports odds snapshotting (`oddAtMomentOfBet`) to lock prices at placement, managed via `BettingService` with `localStorage` persistence.
+- **Automated Race Lifecycle:** Automatic transitions between `open`, `running`, and `closed` states based on start times, with automated result simulation and payout resolution.
 
-## Technical Context
+## 🛠 Tech Stack
 
-- **Framework:** Angular 21+
-- **Styling:** Standard CSS (Scalable Component Architecture)
+- **Framework:** Angular 21 (Standalone Components).
+- **State Management:** Angular Signals (Writable, Computed, and Effects).
+- **Reactivity:** RxJS Interop for memory-safe timers using `takeUntilDestroyed`.
+- **Data Fetching:** Managed async states via the modern **`resource` API**.
 
-**If time:**
+## 🏗 Architecture Decisions
 
-- **RxJS:** Implementing advanced race conditions for live odds.
-- **SignalR:** Real-time server push integration.
+- **Smart Components:** `RaceCardComponent` is "Smart", injecting `BettingService` to manage its own state.
+  Preventing the dashboard from becoming a "God Component".
+- RxJS is used strictly for **events over time** (tickers), while Signals manage **UI state**.
+- **Resource Management:** Universal use of `takeUntilDestroyed()` to prevent background memory leaks.
 
-## Considerations
+## 🛠 How to Run
 
-- **Smart vs. Dumb Components:** There was some back-and-forth regarding component responsibilities. Initially, the `RaceCardComponent` was designed as a "dumb" presentational component, with the `RaceDashboardComponent` handling all bet placements. However, I refactored this so the `RaceCardComponent` is now "smart" (injecting the `BettingService` directly) and the dashboard is "dumb" (responsible only for layout and rendering). This prevents the dashboard from becoming a bloated "god component" and makes the race cards self-contained and highly reusable.
+1.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+2.  **Start the development server:**
+    ```bash
+    pnpm start
+    ```
+3.  **Build the project:**
+    ```bash
+    pnpm build
+    ```
