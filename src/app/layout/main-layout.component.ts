@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BetSlipSidebarComponent } from '../features/betting/components/bet-slip-sidebar.component';
 import { UserService } from '../features/betting/services/user.service';
+import { RaceEngineService } from '../features/racing/services/race-engine.service';
 import { ProfileModalComponent } from '../features/user/components/profile-modal.component';
 
 @Component({
@@ -154,6 +155,7 @@ import { ProfileModalComponent } from '../features/user/components/profile-modal
 })
 export class MainLayoutComponent {
   userService = inject(UserService);
+  raceEngineService = inject(RaceEngineService);
   showProfile = false;
 
   toggleProfile() {

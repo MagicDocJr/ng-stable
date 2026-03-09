@@ -29,4 +29,28 @@ export class UserService {
     this.placedBets.update((currentBets) => [...currentBets, ...newbets]);
     return true;
   }
+
+  resolveBets(raceId: string, winningHorseId: number): void {
+    this.placedBets.update((currentBets) => {
+      let totalWinnings = 0;
+
+      const resolvedBets = currentBets.map((bet) => {
+        if (bet.raceId !== raceId || bet.status !== 'pending') {
+          return bet;
+        }
+
+        if (bet.horseId === winningHorseId) {
+          totalWinnings += bet.stake * bet.oddAtMomentOfBet;
+          return { ...bet, status: 'won' as const };
+        } else {
+          return { ...bet, status: 'lost' as const };
+        }
+      });
+
+      if (totalWinnings > 0) {
+        this.balance.update((currentBalance) => currentBalance + totalWinnings);
+      }
+      return resolvedBets;
+    });
+  }
 }

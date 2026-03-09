@@ -16,6 +16,8 @@ export class BettingService {
     this._items().reduce((total, item) => total + item.stake, 0),
   );
 
+  //TODO this does not aggregate gain for mulitple bets on different horses in
+  // add a tab or button for selecting single/multiple bet types and calculate potential gain accordingly
   readonly potentialGain = computed(() =>
     this._items().reduce((total, item) => total + item.stake * item.oddAtMomentOfBet, 0),
   );
