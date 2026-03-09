@@ -13,7 +13,9 @@ export class RaceEngineService {
 
   constructor() {
     effect(() => {
-      const races = this.racingService.races();
+      const races = this.racingService
+        .races()
+        .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
       for (const race of races) {
         if (race.status === 'closed' && !this.resolvedRaces.has(race.id)) {
           this.simulateRace(race);
@@ -40,7 +42,6 @@ export class RaceEngineService {
         break;
       }
     }
-    const winningHorse = race.horses.find((h: any) => h.id === winningHorseId);
 
     this.userService.resolveBets(race.id, winningHorseId);
   }

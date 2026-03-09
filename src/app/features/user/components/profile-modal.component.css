@@ -92,6 +92,16 @@
   color: #f57f17;
   border: 1px solid #ffe082;
 }
+.status-badge.won {
+  background: #0ca107;
+  color: #ffffff;
+  border: 1px solid #14b12e;
+}
+.status-badge.lost {
+  background: #6d1b1b;
+  color: #fd1d1d;
+  border: 1px solid #ffe082;
+}
 .history-item__mid {
   display: flex;
   justify-content: space-between;

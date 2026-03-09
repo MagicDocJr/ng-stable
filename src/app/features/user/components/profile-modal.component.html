@@ -16,7 +16,13 @@
             <article class="history-item">
               <div class="history-item__top">
                 <span class="horse-name">{{ bet.horseName }}</span>
-                <span class="status-badge pending">{{ bet.status | uppercase }}</span>
+                @if (bet.status === 'pending') {
+                  <span class="status-badge pending">{{ bet.status | uppercase }}</span>
+                } @else if (bet.status === 'won') {
+                  <span class="status-badge won">{{ bet.status | uppercase }}</span>
+                } @else if (bet.status === 'lost') {
+                  <span class="status-badge lost">{{ bet.status | uppercase }}</span>
+                }
               </div>
 
               <div class="history-item__mid">
@@ -25,12 +31,12 @@
               </div>
 
               <div class="history-item__bottom">
-                <span
-                  >Stake:
+                <span>
+                  Stake:
                   <strong>{{ bet.stake | currency: 'NOK' : 'symbol' : '1.0-0' }}</strong></span
                 >
-                <span
-                  >To Win:
+                <span>
+                  To Win:
                   <strong class="potential-win">{{
                     bet.stake * bet.oddAtMomentOfBet | currency: 'NOK' : 'symbol' : '1.0-0'
                   }}</strong></span

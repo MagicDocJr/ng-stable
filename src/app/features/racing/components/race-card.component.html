@@ -33,7 +33,7 @@
           class="btn-odds"
           [class.is-selected]="bettingService.hasBet(race().id, horse.id)"
           (click)="onOddsClick(horse)"
-          [disabled]="race().status !== 'open'"
+          [disabled]="race().status === 'closed'"
           [attr.aria-label]="'Bet on ' + horse.name + ' at odds ' + horse.odds"
         >
           <span class="odds-val">{{ horse.odds | number: '1.2-2' }}</span>

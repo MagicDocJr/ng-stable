@@ -84,7 +84,7 @@ export const MOCK_RACES: Race[] = [
   {
     id: 'R6-LEA',
     trackName: 'Leangen',
-    startTime: fromNow(-2),
+    startTime: fromNow(-4),
     status: 'open',
     horses: [
       { id: 601, name: 'Mid Race', driver: 'A. Stensen', odds: 3.5 },
