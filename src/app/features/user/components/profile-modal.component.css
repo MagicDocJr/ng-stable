@@ -98,9 +98,9 @@
   border: 1px solid #14b12e;
 }
 .status-badge.lost {
-  background: #6d1b1b;
-  color: #fd1d1d;
-  border: 1px solid #ffe082;
+  background: #ad0000;
+  color: #ffffff;
+  border: 1px solid #ff8282;
 }
 .history-item__mid {
   display: flex;

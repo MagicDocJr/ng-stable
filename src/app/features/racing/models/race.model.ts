@@ -3,6 +3,7 @@ export interface Horse {
   name: string;
   driver: string;
   odds: number;
+  trend?: 'up' | 'down' | 'stable';
 }
 
 export interface Race {

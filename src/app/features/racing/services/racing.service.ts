@@ -1,29 +1,14 @@
-import { isPlatformBrowser } from '@angular/common';
-import {
-  computed,
-  DestroyRef,
-  inject,
-  Injectable,
-  PLATFORM_ID,
-  resource,
-  signal,
-} from '@angular/core';
+import { computed, effect, Injectable, resource, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
+import { Race } from '../models/race.model';
 import { MOCK_RACES } from './mock-races';
 @Injectable({
   providedIn: 'root',
 })
 export class RacingService {
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly _races = signal<Race[]>([]);
   private readonly now = signal(Date.now());
-
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      const intervalId = setInterval(() => this.now.set(Date.now()), 5000);
-      // Mem leak prevention
-      this.destroyRef.onDestroy(() => clearInterval(intervalId));
-    }
-  }
 
   readonly raceResource = resource({
     loader: async () => {
@@ -31,15 +16,49 @@ export class RacingService {
       return MOCK_RACES;
     },
   });
-
   readonly isLoading = this.raceResource.isLoading;
   readonly error = this.raceResource.error;
 
+  constructor() {
+    effect(() => {
+      const loadedRaces = this.raceResource.value();
+      if (loadedRaces) {
+        this._races.set(loadedRaces);
+      }
+    });
+
+    interval(5000)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.now.set(Date.now());
+        if (!this.isLoading()) {
+          this.fluctuateOdds();
+        }
+      });
+  }
+
+  private fluctuateOdds(): void {
+    this._races.update((currentRaces) =>
+      currentRaces.map((race) => {
+        if (race.status === 'closed' || race.status === 'running') {
+          return race;
+        }
+
+        const updatedHorses = race.horses.map((horse) => {
+          const fluctuation = 1 + (Math.random() * 0.2 - 0.1); // +/- 10% fluctuation
+          const newOdds = Math.max(1.01, Math.round(horse.odds * fluctuation * 100) / 100); // Round to 2 decimals
+          return { ...horse, odds: newOdds };
+        });
+        return { ...race, horses: updatedHorses };
+      }),
+    );
+  }
+
   readonly races = computed(() => {
-    const rawRaces = this.raceResource.value() ?? [];
+    const currentRaces = this._races();
     const currentTime = this.now();
 
-    return rawRaces.map((race) => {
+    return currentRaces.map((race) => {
       const startTime = new Date(race.startTime).getTime();
       const diffMinutes = (startTime - currentTime) / (1000 * 60);
 

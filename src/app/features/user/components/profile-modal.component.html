@@ -16,13 +16,10 @@
             <article class="history-item">
               <div class="history-item__top">
                 <span class="horse-name">{{ bet.horseName }}</span>
-                @if (bet.status === 'pending') {
-                  <span class="status-badge pending">{{ bet.status | uppercase }}</span>
-                } @else if (bet.status === 'won') {
-                  <span class="status-badge won">{{ bet.status | uppercase }}</span>
-                } @else if (bet.status === 'lost') {
-                  <span class="status-badge lost">{{ bet.status | uppercase }}</span>
-                }
+
+                <span class="status-badge" [class]="bet.status">
+                  {{ bet.status | uppercase }}
+                </span>
               </div>
 
               <div class="history-item__mid">

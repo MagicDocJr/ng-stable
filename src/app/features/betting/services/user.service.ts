@@ -6,12 +6,36 @@ export interface PlacedBet extends BetSlipItem {
   placedAt: Date;
   status: 'pending' | 'won' | 'lost';
 }
+const hoursAgo = (hours: number) => new Date(Date.now() - 1000 * 60 * 60 * hours);
+const MOCK_HISTORY: PlacedBet[] = [
+  {
+    raceId: 'R99-OSL',
+    horseId: 901,
+    horseName: 'Historic Winner',
+    stake: 500,
+    oddAtMomentOfBet: 3.2,
+    transactionId: 'WIN-7A3B9',
+    placedAt: hoursAgo(24),
+    status: 'won',
+  },
+  {
+    raceId: 'R98-BER',
+    horseId: 805,
+    horseName: 'Slowpoke',
+    stake: 200,
+    oddAtMomentOfBet: 15.0,
+    transactionId: 'LST-2X9P1',
+    placedAt: hoursAgo(48),
+    status: 'lost',
+  },
+];
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   readonly balance = signal<number>(1000);
-  readonly placedBets = signal<PlacedBet[]>([]);
+  readonly placedBets = signal<PlacedBet[]>(MOCK_HISTORY);
 
   placeBet(bets: BetSlipItem[], totalStake: number): boolean {
     if (totalStake > this.balance()) {
@@ -26,7 +50,7 @@ export class UserService {
       placedAt: new Date(),
       status: 'pending',
     }));
-    this.placedBets.update((currentBets) => [...currentBets, ...newbets]);
+    this.placedBets.update((currentBets) => [...newbets, ...currentBets]);
     return true;
   }
 
