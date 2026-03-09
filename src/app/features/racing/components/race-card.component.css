@@ -161,7 +161,40 @@
   background-color: #009e08;
   cursor: pointer;
 }
+.btn-odds.up {
+  animation: flash-green 1.5s ease-out;
+}
 
+.btn-odds.down {
+  animation: flash-red 1.5s ease-out;
+}
+
+/* 2. Fade back to the default button colors */
+@keyframes flash-green {
+  0% {
+    background-color: #4caf50;
+    color: white;
+    transform: scale(1.05);
+  }
+  100% {
+    background-color: #0056b3; /* Default blue */
+    color: white;
+    transform: scale(1);
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: #f44336;
+    color: white;
+    transform: scale(0.95);
+  }
+  100% {
+    background-color: #0056b3; /* Default blue */
+    color: white;
+    transform: scale(1);
+  }
+}
 .odds-val {
   font-weight: bold;
   font-size: 1rem;

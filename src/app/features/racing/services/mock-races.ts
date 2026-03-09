@@ -69,7 +69,7 @@ export const MOCK_RACES: Race[] = [
   {
     id: 'R5-KLO',
     trackName: 'Klosterskogen',
-    startTime: fromNow(1),
+    startTime: fromNow(3),
     status: 'open',
     horses: [
       { id: 501, name: 'Testing Time', driver: 'T. Borg', odds: 2.2 },

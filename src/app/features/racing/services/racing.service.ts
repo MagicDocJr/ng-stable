@@ -1,4 +1,4 @@
-import { computed, effect, Injectable, resource, signal } from '@angular/core';
+import { effect, Injectable, resource, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 import { Race } from '../models/race.model';
@@ -8,7 +8,7 @@ import { MOCK_RACES } from './mock-races';
 })
 export class RacingService {
   private readonly _races = signal<Race[]>([]);
-  private readonly now = signal(Date.now());
+  readonly races = this._races.asReadonly();
 
   readonly raceResource = resource({
     loader: async () => {
@@ -24,52 +24,72 @@ export class RacingService {
       const loadedRaces = this.raceResource.value();
       if (loadedRaces) {
         this._races.set(loadedRaces);
+        this.processRaceTick();
       }
     });
 
-    interval(5000)
+    // fun fact: RxJs was created by the same person who created Linq in C# hence the similarities (Erik Meijer)
+    // The difference is mainly in the fact that RxJs is push based and Linq is pull based.
+    interval(6000)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
-        this.now.set(Date.now());
         if (!this.isLoading()) {
-          this.fluctuateOdds();
+          this.processRaceTick();
         }
+        setTimeout(() => this.clearTrends(), 1500);
       });
   }
 
-  private fluctuateOdds(): void {
+  private processRaceTick(): void {
+    const currentTime = Date.now();
+
     this._races.update((currentRaces) =>
       currentRaces.map((race) => {
-        if (race.status === 'closed' || race.status === 'running') {
-          return race;
+        const startTime = new Date(race.startTime).getTime();
+        const diffMinutes = (startTime - currentTime) / (1000 * 60);
+
+        let currentStatus: 'open' | 'closed' | 'running' = 'open';
+        if (diffMinutes > -5 && diffMinutes <= 0) {
+          currentStatus = 'running';
+        } else if (diffMinutes <= -5) {
+          currentStatus = 'closed';
+        }
+
+        if (currentStatus !== 'open') {
+          return { ...race, status: currentStatus };
         }
 
         const updatedHorses = race.horses.map((horse) => {
           const fluctuation = 1 + (Math.random() * 0.2 - 0.1); // +/- 10% fluctuation
           const newOdds = Math.max(1.01, Math.round(horse.odds * fluctuation * 100) / 100); // Round to 2 decimals
-          return { ...horse, odds: newOdds };
+          let currentTrend: 'up' | 'down' | 'stable' = 'stable';
+          if (newOdds > horse.odds) {
+            currentTrend = 'up';
+          } else if (newOdds < horse.odds) {
+            currentTrend = 'down';
+          }
+          return { ...horse, odds: newOdds, trend: currentTrend };
         });
-        return { ...race, horses: updatedHorses };
+        return { ...race, status: currentStatus, horses: updatedHorses };
       }),
     );
   }
 
-  readonly races = computed(() => {
-    const currentRaces = this._races();
-    const currentTime = this.now();
+  // need to clear trends for animations in css to be ran on next tick.
+  private clearTrends(): void {
+    this._races.update((currentRaces) =>
+      currentRaces.map((race) => {
+        if (race.status !== 'open') {
+          return race;
+        }
 
-    return currentRaces.map((race) => {
-      const startTime = new Date(race.startTime).getTime();
-      const diffMinutes = (startTime - currentTime) / (1000 * 60);
+        const resetHorses = race.horses.map((horse) => ({
+          ...horse,
+          trend: 'stable' as const,
+        }));
 
-      let dynamicStatus: 'open' | 'closed' | 'running' = 'open';
-
-      if (diffMinutes > -5 && diffMinutes <= 0) {
-        dynamicStatus = 'running';
-      } else if (diffMinutes <= -5) {
-        dynamicStatus = 'closed';
-      }
-      return { ...race, status: dynamicStatus };
-    });
-  });
+        return { ...race, horses: resetHorses };
+      }),
+    );
+  }
 }
