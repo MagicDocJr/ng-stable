@@ -15,4 +15,11 @@ export class ProfileModalComponent {
   close() {
     this.closeModal.emit();
   }
+
+  deposit(amountStr: string): void {
+    const amount = Number(amountStr);
+    if (!isNaN(amount)) {
+      this.userService.updateBalance(amount);
+    }
+  }
 }

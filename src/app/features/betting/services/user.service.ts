@@ -37,13 +37,16 @@ export class UserService {
   readonly balance = signal<number>(1000);
   readonly placedBets = signal<PlacedBet[]>(MOCK_HISTORY);
 
+  updateBalance(amount: number): void {
+    this.balance.update((currentBalance) => currentBalance + amount);
+  }
+
   placeBet(bets: BetSlipItem[], totalStake: number): boolean {
     if (totalStake > this.balance()) {
       return false;
     }
 
-    this.balance.update((currentBalance) => currentBalance - totalStake);
-
+    this.updateBalance(-totalStake);
     const newbets: PlacedBet[] = bets.map((bet) => ({
       ...bet,
       transactionId: Math.random().toString(36).substring(2, 15),
@@ -72,7 +75,7 @@ export class UserService {
       });
 
       if (totalWinnings > 0) {
-        this.balance.update((currentBalance) => currentBalance + totalWinnings);
+        this.updateBalance(totalWinnings);
       }
       return resolvedBets;
     });
