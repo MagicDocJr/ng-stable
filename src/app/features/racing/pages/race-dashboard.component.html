@@ -2,6 +2,14 @@
   <header class="dashboard-header">
     <h1>Upcoming Races</h1>
     <p>Live odds from NG-stable</p>
+
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search track, horse, or driver..."
+        (input)="onSearch($event)"
+      />
+    </div>
   </header>
 
   @if (racingService.isLoading()) {
@@ -12,7 +20,7 @@
   }
 
   <div class="race-grid" [class.is-refreshing]="racingService.isLoading()">
-    @for (race of racingService.races(); track race.id) {
+    @for (race of racingService.filteredRaces(); track race.id) {
       <app-race-card [race]="race" />
     }
   </div>

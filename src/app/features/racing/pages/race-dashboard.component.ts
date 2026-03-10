@@ -10,4 +10,9 @@ import { RacingService } from '../services/racing.service';
 })
 export class RaceDashboardComponent {
   racingService = inject(RacingService);
+
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.racingService.searchQuery.set(input.value);
+  }
 }

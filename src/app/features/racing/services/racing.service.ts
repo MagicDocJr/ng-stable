@@ -1,4 +1,4 @@
-import { effect, Injectable, resource, signal } from '@angular/core';
+import { computed, effect, Injectable, resource, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 import { Race } from '../models/race.model';
@@ -9,6 +9,24 @@ import { MOCK_RACES } from './mock-races';
 export class RacingService {
   private readonly _races = signal<Race[]>([]);
   readonly races = this._races.asReadonly();
+  readonly searchQuery = signal<string>('');
+
+  readonly filteredRaces = computed(() => {
+    const currentRaces = this.races();
+    const query = this.searchQuery().toLowerCase().trim();
+
+    if (!query) {
+      return currentRaces;
+    }
+
+    return currentRaces.filter((race) => {
+      const matchTrack = race.trackName.toLowerCase().includes(query);
+      const matchHorse = race.horses.some((h) => h.name.toLowerCase().includes(query));
+      const matchDriver = race.horses.some((h) => h.driver.toLowerCase().includes(query));
+
+      return matchTrack || matchDriver || matchHorse;
+    });
+  });
 
   readonly raceResource = resource({
     loader: async () => {
