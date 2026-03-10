@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from '../features/auth/auth.service';
 import { BetSlipSidebarComponent } from '../features/betting/components/bet-slip-sidebar.component';
 import { UserService } from '../features/betting/services/user.service';
 import { RaceEngineService } from '../features/racing/services/race-engine.service';
@@ -31,6 +32,8 @@ import { ProfileModalComponent } from '../features/user/components/profile-modal
               <span class="history-count">{{ userService.placedBets().length }}</span>
             }
           </button>
+
+          <button class="btn-logout" (click)="logout()">Logout</button>
         </div>
       </header>
 
@@ -92,7 +95,7 @@ import { ProfileModalComponent } from '../features/user/components/profile-modal
       .user-nav {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1rem; /* Adjusted gap to accommodate logout button */
       }
 
       .balance-badge {
@@ -117,7 +120,8 @@ import { ProfileModalComponent } from '../features/user/components/profile-modal
         color: var(--color-success, #4caf50);
       }
 
-      .btn-profile {
+      .btn-profile,
+      .btn-logout {
         background: transparent;
         border: 1px solid #555;
         color: white;
@@ -128,10 +132,22 @@ import { ProfileModalComponent } from '../features/user/components/profile-modal
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        font-weight: 600;
       }
 
-      .btn-profile:hover {
+      .btn-profile:hover,
+      .btn-logout:hover {
         background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Specific style for logout to make it stand out as a destructive action */
+      .btn-logout {
+        border-color: var(--color-accent, #d32f2f);
+        color: #ff5252;
+      }
+
+      .btn-logout:hover {
+        background: rgba(211, 47, 47, 0.1);
       }
 
       .history-count {
@@ -157,8 +173,15 @@ export class MainLayoutComponent {
   userService = inject(UserService);
   raceEngineService = inject(RaceEngineService);
   showProfile = false;
+  authService = inject(AuthService);
+  router = inject(Router);
 
   toggleProfile() {
     this.showProfile = !this.showProfile;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -12,7 +12,7 @@
       </div>
 
       <div class="deposit-row">
-        <input type="number" #depositInput placeholder="Amount" min="10" />
+        <input type="number" #depositInput placeholder="Amount" min="10" step="10" />
         <button class="btn-deposit" (click)="deposit(depositInput.value); depositInput.value = ''">
           Deposit
         </button>
