@@ -1,12 +1,13 @@
-import { computed, effect, Injectable, resource, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, resource, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { interval } from 'rxjs';
+import { firstValueFrom, interval } from 'rxjs';
 import { Race } from '../models/race.model';
-import { MOCK_RACES } from './mock-races';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
 export class RacingService {
+  private http = inject(HttpClient);
   private readonly _races = signal<Race[]>([]);
   readonly races = this._races.asReadonly();
   readonly searchQuery = signal<string>('');
@@ -30,8 +31,9 @@ export class RacingService {
 
   readonly raceResource = resource({
     loader: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return MOCK_RACES;
+      return firstValueFrom(
+        this.http.get<Race[]>('http://localhost:3000/races')
+      )
     },
   });
   readonly isLoading = this.raceResource.isLoading;
