@@ -23,6 +23,6 @@ export class AuthService {
   }
 
   getToken(): string | null{
-    return this.getToken();
+    return this._token();
   }
 }
