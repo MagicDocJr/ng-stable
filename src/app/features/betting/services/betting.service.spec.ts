@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { BettingService } from './betting.service';
 import { BetSlipItem } from '../models/bet-slip-model';
+import { BettingService } from './betting.service';
 
 const makeBet = (overrides: Partial<BetSlipItem> = {}): BetSlipItem => ({
   raceId: 'R1',
