@@ -1,6 +1,7 @@
 import { effect, inject, Injectable } from '@angular/core';
 import { UserService } from '../../betting/services/user.service';
 import { RacingService } from './racing.service';
+import { Horse, Race } from '../models/race.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,8 +26,8 @@ export class RaceEngineService {
     });
   }
 
-  simulateRace(race: any): void {
-    const probabilities = race.horses.map((horse: any) => 1 / horse.odd);
+  simulateRace(race: Race): void {
+    const probabilities = race.horses.map((horse: Horse) => 1 / horse.odds);
     const totalProbabilites = probabilities.reduce((sum: number, p: number) => sum + p, 0);
     const normalizedProbabilities = probabilities.map((p: number) => p / totalProbabilites);
 
