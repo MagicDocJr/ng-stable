@@ -28,9 +28,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
         //Case 2: a refresh is already in progress and request should join queue
         return authService.refresInProgress$.pipe(
-          filter(inProgress => !inProgress),
+          filter((inProgress) => !inProgress),
           take(1),
-          switchMap(() => next(req))
+          switchMap(() => next(req)),
         );
 
         router.navigate(['/login']);
