@@ -15,7 +15,19 @@ export class AuthService {
   private readonly _isLoggedIn = signal<boolean>(false);
   readonly isLoggedIn = this._isLoggedIn.asReadonly();
   private readonly _refreshInProgress$ = new BehaviorSubject<boolean>(false);
+  private readonly _isInitialized$ = new BehaviorSubject<boolean>(false);
 
+  markInitialized(): void {
+    this._isInitialized$.next(true);
+  }
+
+  get isInitialized$(): Observable<boolean> {
+    return this._isInitialized$.asObservable();
+  }
+
+  get isInitialized(): boolean {
+    return this._isInitialized$.value;
+  }
   getToken(): string | null {
     return this._accessToken();
   }
@@ -41,26 +53,20 @@ export class AuthService {
       );
   }
 
-  refreshAccessToken(): Observable<AuthResponse> {
-    const refreshToken = localStorage.getItem('refreshToken');
-    // tell all waiting interceptors that a refresh is in progress
-    this._refreshInProgress$.next(true);
-
-    return this.http
-      .post<AuthResponse>(`${this.apiUrl}/auth/refresh`, {
-        refreshToken,
-      })
-      .pipe(
-        tap((response) => {
-          this._accessToken.set(response.accessToken);
-          this._isLoggedIn.set(true);
-          this._refreshInProgress$.next(false);
-        }),
-      );
+  get isRefreshing(): boolean {
+    return this._refreshInProgress$.value;
   }
 
-  get isRefreshing(): boolean{
-    return this._refreshInProgress$.value
+  refreshAccessToken(): Observable<AuthResponse> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    this._refreshInProgress$.next(true);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/refresh`, { refreshToken }).pipe(
+      tap((response) => {
+        this._accessToken.set(response.accessToken);
+        this._isLoggedIn.set(true);
+        this._refreshInProgress$.next(false);
+      }),
+    );
   }
 
   logout(): void {
