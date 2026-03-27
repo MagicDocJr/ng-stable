@@ -112,10 +112,13 @@ export class LoginComponent {
   error = signal<string>('');
 
   onLogin(username: string, password: string): void {
-    if (this.authService.login(username, password)) {
-      this.router.navigate(['/']);
-    } else {
-      this.error.set('Invalid username or password');
-    }
+    this.authService.login(username, password).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        this.error.set('invalid username or password');
+      },
+    });
   }
 }
