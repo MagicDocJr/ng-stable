@@ -2,11 +2,11 @@
 
 **Sportsbook Dashboard Simulation**
 
-A proof-of-concept exploring **Angular 21+** features and high-performance state management for a real-time horse racing dashboard.
+A proof-of-concept exploring **Angular 21+** features and state management for a real-time horse racing dashboard.
 
 ## 🚀 Key Features
 
-- **Live Odds "Game Loop":** Centralized heartbeat using **RxJS `interval`** to process race statuses and odds fluctuations.
+- **Live Odds "Game Loop":** Using **RxJS `interval`** to process race statuses and odds fluctuations.
 - **Unidirectional Data Flow:** Services process domain logic to update a single source of truth (`_races` signal).
 - **Reactive Betting Slip:** Supports odds snapshotting (`oddAtMomentOfBet`) to lock prices at placement, managed via `BettingService` with `localStorage` persistence.
 - **Automated Race Lifecycle:** Automatic transitions between `open`, `running`, and `closed` states based on start times, with automated result simulation and payout resolution.
